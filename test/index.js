@@ -14,7 +14,7 @@ const FTP_PASS = 'password';
 const FTP_TEST_FILE = 'readme.txt';
 
 test('Connect to a free SFTP server', async (t) => {
-	// Init
+	// Test
 	const conn = await sftp.connect(FTP_HOST, FTP_PORT, FTP_USER, FTP_PASS);
 
 	// Check
@@ -27,6 +27,8 @@ test('Connect to a free SFTP server', async (t) => {
 test('Download a file from a free SFTP server', async (t) => {
 	// Init
 	const conn = await sftp.connect(FTP_HOST, FTP_PORT, FTP_USER, FTP_PASS);
+
+	// Test
 	const localFilePath = path.join('test', FTP_TEST_FILE);
 	const res = await sftp.downloadFile(conn, FTP_TEST_FILE, localFilePath);
 
