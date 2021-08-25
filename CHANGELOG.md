@@ -1,3 +1,15 @@
+0.1.1 / 2021-08-25
+==================
+
+  * 0.1.1
+  * Merge branch 'develop' into 'main'
+  * Updated tests to use SFTP info from '.env' file
+  * Updated dev dependencies
+  * Updated comments in "download file" test
+  * Added comments to "download file" test
+  * Updated "download file" test
+  * Updated changelog
+
 0.1.0 / 2021-08-25
 ==================
 
