@@ -2,17 +2,19 @@
 
 const { Client } = require('ssh2');
 
-const _conn = new Client();
+let _sftp = null;
 
 function connect(host, port, user, password) {
 	return new Promise((resolve, reject) => {
-        _conn.on('ready', () => {
-            _conn.sftp((error, sftp) => {
+		_sftp = new Client();
+
+        _sftp.on('ready', () => {
+            _sftp.sftp((error, conn) => {
                 if (error) { throw error; }
-                resolve(sftp);
+                resolve(conn);
             });
         })
-        _conn.on('error', reject);
+        _sftp.on('error', reject);
 
         let params = {
             host: host,
@@ -20,17 +22,28 @@ function connect(host, port, user, password) {
             user: user,
             password: password,
         };
-        _conn.connect(params);
+        _sftp.connect(params);
 	});
 }
 
 function disconnect() {
-    _conn.end();
+    _sftp.end();
+}
+
+function downloadFile(conn, ftpFilePath, localFilePath) {
+    return new Promise((resolve, reject) => {
+        conn.fastGet(ftpFilePath, localFilePath, (error) => {
+            if (error) { return reject(error); }
+            resolve(localFilePath);
+        });
+    });
 }
 
 // EXPORTS
 
 module.exports = {
     connect,
-	disconnect
+	disconnect,
+
+	downloadFile
 };
