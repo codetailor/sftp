@@ -1,6 +1,17 @@
+0.1.0 / 2021-08-25
+==================
+
+  * 0.1.0
+  * Merge branch 'develop' into 'main'
+  * Added function to download a file
+  * Added test to download a file
+  * Updated changelog
+
 0.0.2 / 2021-08-25
 ==================
 
+  * 0.0.2
+  * Merge branch 'develop' into 'main'
   * Added connect and disconnect functions
   * Created connection test
   * Updated dependencies and test script
