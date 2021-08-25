@@ -21,8 +21,9 @@ test('Connect to a free SFTP server', async (t) => {
 
 test('Download a file from a free SFTP server', async (t) => {
 	const conn = await sftp.connect(FTP_HOST, FTP_PORT, FTP_USER, FTP_PASS);
-	const res = await sftp.downloadFile(conn, FTP_TEST_FILE, path.join('test', FTP_TEST_FILE));
+	const localFilePath = path.join('test', FTP_TEST_FILE);
+	const res = await sftp.downloadFile(conn, FTP_TEST_FILE, localFilePath);
 	t.ok(res);
 	sftp.disconnect();
-	fs.unlinkSync(path.join('test', FTP_TEST_FILE));
+	fs.unlinkSync(localFilePath);
 });
