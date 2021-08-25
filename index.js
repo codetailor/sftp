@@ -39,11 +39,21 @@ function downloadFile(conn, ftpFilePath, localFilePath) {
     });
 }
 
+function uploadFile(conn, localFilePath, ftpFilePath) {
+	return new Promise((resolve, reject) => {
+		conn.fastPut(localFilePath, ftpFilePath, (error) => {
+            if (error) { return reject(error); }
+            resolve(remoteFilePath);
+        });
+	});
+}
+
 // EXPORTS
 
 module.exports = {
     connect,
 	disconnect,
 
-	downloadFile
+	downloadFile,
+	uploadFile
 };
