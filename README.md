@@ -1,2 +1,3 @@
-# sftp
-Simple SFTP module for Node.js [NPM]
+# @codetailor/sftp
+
+Simple SFTP module for Node.js
