@@ -1,3 +1,12 @@
+0.3.2 / 2021-08-26
+==================
+
+  * 0.3.2
+  * Merge branch 'develop' into 'main'
+  * Updated dependencies
+  * Added JSDoc to functions
+  * Updated changelog
+
 0.3.1 / 2021-08-26
 ==================
 
