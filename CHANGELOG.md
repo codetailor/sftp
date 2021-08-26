@@ -1,3 +1,13 @@
+0.2.0 / 2021-08-26
+==================
+
+  * 0.2.0
+  * Merge branch 'develop' into 'main'
+  * Added functions "upload file" and "create folder"
+  * Added test for "upload file" function
+  * Added "upload file" function
+  * Updated changelog
+
 0.1.1 / 2021-08-25
 ==================
 
