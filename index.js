@@ -1,7 +1,17 @@
 'use strict';
 
-const { Client } = require('ssh2');
+const { Client, SFTPWrapper } = require('ssh2');
+const { FileEntry } = require('ssh2-streams');
 
+/**
+ * Connects to SFTP server
+ *
+ * @param { string } host SFTP host
+ * @param { number } port SFTP port (usually 22)
+ * @param { string } user SFTP user
+ * @param { string } password SFTP password
+ * @returns { SFTPWrapper } SFTP connection handle
+ */
 function connect(host, port, user, password) {
 	return new Promise((resolve, reject) => {
 		const sftp = new Client();
@@ -24,10 +34,23 @@ function connect(host, port, user, password) {
 	});
 }
 
+/**
+ * Disconnects from SFTP server
+ *
+ * @param { SFTPWrapper } conn SFTP connection handle
+ */
 function disconnect(conn) {
     conn._client.end();
 }
 
+/**
+ * Downloads a file from SFTP server
+ *
+ * @param { SFTPWrapper } conn SFTP connection handle
+ * @param { string } ftpFilePath SFTP file path (origin)
+ * @param { string } localFilePath Local file path (destination)
+ * @returns { string } Local file path (destination)
+ */
 function downloadFile(conn, ftpFilePath, localFilePath) {
     return new Promise((resolve, reject) => {
         conn.fastGet(ftpFilePath, localFilePath, (error) => {
@@ -37,6 +60,14 @@ function downloadFile(conn, ftpFilePath, localFilePath) {
     });
 }
 
+/**
+ * Uploads a file to SFTP server
+ *
+ * @param { SFTPWrapper } conn SFTP connection handle
+ * @param { string } localFilePath Local file path (origin)
+ * @param { string } ftpFilePath SFTP file path (destination)
+ * @returns { string } SFTP file path (destination)
+ */
 function uploadFile(conn, localFilePath, ftpFilePath) {
 	return new Promise((resolve, reject) => {
 		conn.fastPut(localFilePath, ftpFilePath, (error) => {
@@ -46,6 +77,13 @@ function uploadFile(conn, localFilePath, ftpFilePath) {
 	});
 }
 
+/**
+ * Creates a folder in SFTP server
+ *
+ * @param { SFTPWrapper } conn SFTP connection handle
+ * @param { string } ftpFolder SFTP folder to create
+ * @returns { string } SFTP folder that was created
+ */
 function createFolder(conn, ftpFolder) {
     return new Promise((resolve, reject) => {
 		conn.readdir(ftpFolder, (error) => {
@@ -58,6 +96,13 @@ function createFolder(conn, ftpFolder) {
 	});
 }
 
+/**
+ * Gets the file list from a folder in SFTP server
+ *
+ * @param { SFTPWrapper } conn SFTP connection handle
+ * @param { string } ftpFolder SFTP folder to read
+ * @returns { FileEntry[] } Files list from SFTP folder
+ */
 function getFileList(conn, ftpFolder) {
     return new Promise((resolve, reject) => {
         conn.readdir(ftpFolder, (error, fileList) => {
