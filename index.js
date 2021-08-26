@@ -2,32 +2,30 @@
 
 const { Client } = require('ssh2');
 
-let _sftp = null;
-
 function connect(host, port, user, password) {
 	return new Promise((resolve, reject) => {
-		_sftp = new Client();
+		const sftp = new Client();
 
-        _sftp.on('ready', () => {
-            _sftp.sftp((error, conn) => {
+        sftp.on('ready', () => {
+            sftp.sftp((error, conn) => {
                 if (error) { throw error; }
                 resolve(conn);
             });
         })
-        _sftp.on('error', reject);
+        sftp.on('error', reject);
 
-        let params = {
+        const params = {
             host: host,
             port: port,
             user: user,
             password: password,
         };
-        _sftp.connect(params);
+        sftp.connect(params);
 	});
 }
 
-function disconnect() {
-    _sftp.end();
+function disconnect(conn) {
+    conn._client.end();
 }
 
 function downloadFile(conn, ftpFilePath, localFilePath) {
@@ -39,11 +37,34 @@ function downloadFile(conn, ftpFilePath, localFilePath) {
     });
 }
 
+function uploadFile(conn, localFilePath, ftpFilePath) {
+	return new Promise((resolve, reject) => {
+		conn.fastPut(localFilePath, ftpFilePath, (error) => {
+            if (error) { return reject(error); }
+            resolve(ftpFilePath);
+        });
+	});
+}
+
+function createFolder(conn, ftpFolder) {
+    return new Promise((resolve, reject) => {
+		conn.readdir(ftpFolder, (error) => {
+			if (!error) { return resolve(ftpFolder); }
+			conn.mkdir(ftpFolder, (error) => {
+				if (error) { return reject(error); }
+				return resolve(ftpFolder);
+			});
+		});
+	});
+}
+
 // EXPORTS
 
 module.exports = {
     connect,
 	disconnect,
 
-	downloadFile
+	downloadFile,
+	uploadFile,
+	createFolder
 };
