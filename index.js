@@ -52,10 +52,19 @@ function createFolder(conn, ftpFolder) {
 			if (!error) { return resolve(ftpFolder); }
 			conn.mkdir(ftpFolder, (error) => {
 				if (error) { return reject(error); }
-				return resolve(ftpFolder);
+				resolve(ftpFolder);
 			});
 		});
 	});
+}
+
+function getFileList(conn, ftpFolder) {
+    return new Promise((resolve, reject) => {
+        conn.readdir(ftpFolder, (error, fileList) => {
+            if (error) { return reject(error); }
+			resolve(fileList);
+        });
+    });
 }
 
 // EXPORTS
@@ -66,5 +75,6 @@ module.exports = {
 
 	downloadFile,
 	uploadFile,
-	createFolder
+	createFolder,
+	getFileList
 };
