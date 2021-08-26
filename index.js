@@ -62,6 +62,10 @@ function getFileList(conn, ftpFolder) {
     return new Promise((resolve, reject) => {
         conn.readdir(ftpFolder, (error, fileList) => {
             if (error) { return reject(error); }
+			fileList = fileList.map(x => {
+				x.is_folder = (x.longname[0] === 'd');
+				return x;
+			});
 			resolve(fileList);
         });
     });
