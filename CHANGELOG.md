@@ -1,3 +1,11 @@
+0.3.1 / 2021-08-26
+==================
+
+  * 0.3.1
+  * Merge branch 'develop' into 'main'
+  * Updated "get file list" to include "is_folder" flag
+  * Updated changelog
+
 0.3.0 / 2021-08-26
 ==================
 
