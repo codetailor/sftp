@@ -1,3 +1,11 @@
+0.3.0 / 2021-08-26
+==================
+
+  * 0.3.0
+  * Merge branch 'develop' into 'main'
+  * Added function "get file list"
+  * Updated changelog
+
 0.2.0 / 2021-08-26
 ==================
 
