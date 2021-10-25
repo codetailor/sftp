@@ -78,6 +78,21 @@ function uploadFile(conn, localFilePath, ftpFilePath) {
 }
 
 /**
+ * Deletes a file from SFTP server
+ *
+ * @param { SFTPWrapper } conn SFTP connection handle
+ * @param { string } ftpFilePath SFTP file path
+ */
+function deleteFile(conn, ftpFilePath) {
+	return new Promise((resolve, reject) => {
+		conn.unlink(ftpFilePath, (error) => {
+            if (error) { return reject(error); }
+            resolve();
+        });
+	});
+}
+
+/**
  * Creates a folder in SFTP server
  *
  * @param { SFTPWrapper } conn SFTP connection handle
@@ -124,6 +139,7 @@ module.exports = {
 
 	downloadFile,
 	uploadFile,
+	deleteFile,
 	createFolder,
 	getFileList
 };
