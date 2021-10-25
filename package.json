@@ -1,6 +1,6 @@
 {
   "name": "@codetailor/sftp",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "description": "Simple SFTP module for Node.js",
   "main": "index.js",
   "scripts": {
