@@ -1,3 +1,11 @@
+1.0.0 / 2021-10-25
+==================
+
+  * 1.0.0
+  * Merge 'develop' into 'main'
+  * Added method to delete a file from SFTP
+  * Updated changelog
+
 0.3.2 / 2021-08-26
 ==================
 
